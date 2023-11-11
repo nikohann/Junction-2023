@@ -6,6 +6,7 @@ import {
 import { OpenAIStream, StreamingTextResponse } from 'ai'
 import { ApplicationError, UserError } from '@/lib/errors'
 import { codeBlock, oneLine } from 'common-tags'
+import GPT3Tokenizer from 'gpt3-tokenizer'
 
 const openAiKey = process.env.OPENAI_KEY
 
@@ -30,30 +31,57 @@ export async function POST(req: Request) {
 
     const { messages } = json;
 
-    if (!messages || !messages[0].content) {
+    if (!messages || !messages[0].content) {
       throw new UserError('Missing query in request data')
     }
 
 
-    /*
-    for (let i = 0; i < pageSections.length; i++) {
-      const pageSection = pageSections[i]
-      const content = pageSection.content
-      const encoded = tokenizer.encode(content)
-      tokenCount += encoded.text.length
+    const news = await fetch("http://65.109.134.221:3000/api/ask", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer SecretKey12345"
+      },
+      body: JSON.stringify({
+        question: messages[0].content,
+      })
+    });
 
-      if (tokenCount >= 1500) {
-        break
+    const newsJson = await news.json();
+
+    console.log(newsJson)
+
+    const tokenizer = new GPT3Tokenizer({ type: 'gpt3' });
+    let tokenCount = 0;
+    let contextText = '';
+    
+    for (let i = 0; i < newsJson.searches.length; i++) {
+      // Iterate through each 'news' item in the current 'search'
+      for (let j = 0; j < newsJson.searches[i].news.length; j++) {
+        const newsItem = newsJson.searches[i].news[j];
+        const content = newsItem.summary;
+        const encoded = tokenizer.encode(content);
+        tokenCount += encoded.text.length;
+    
+        if (tokenCount >= 1500) {
+          break;
+        }
+    
+        contextText += `${content.trim()}\n---\n`;
       }
+    
+      // Check if the token count limit has been reached after processing each search
+      if (tokenCount >= 1500) {
+        break;
+      }
+    }    
 
-      contextText += `${content.trim()}\n---\n`
-    }
-    */
+    //print context
+    console.log(contextText)
 
-    let contextText = 'There is no context available for this question.'
     const prompt = codeBlock`
       ${oneLine`
-        You are a very enthusiastic Supabase representative who loves
+        You are a very enthusiastic Outokumpu steel representative who loves
         to help people!"
       `}
 

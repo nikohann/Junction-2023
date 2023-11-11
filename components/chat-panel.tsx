@@ -40,7 +40,7 @@ export function ChatPanel({
               variant="flat"
               onClick={() => stop()}
             >
-              <IconStop className="mr-2" />
+              <IconStop className="animate-pulse mr-2" />
               Stop generating
             </Button>
           ) : (
