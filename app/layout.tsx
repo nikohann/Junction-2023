@@ -24,11 +24,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <head />
-      <body>
+      <body className="min-h-screen bg-background font-sans antialiased dark">
         <Providers>
-          <div className="flex flex-col min-h-screen">
-            <main className="flex flex-col flex-1 bg-muted/50">{children}</main>
-          </div>
+          <main className="flex flex-col flex-1 bg-muted/50">{children}</main>
         </Providers>
       </body>
     </html>

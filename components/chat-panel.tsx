@@ -36,7 +36,7 @@ export function ChatPanel({
         <div className="flex h-10 items-center justify-center mb-10">
           {isLoading ? (
             <Button
-              variant="bordered"
+              variant="flat"
               onClick={() => stop()}
             >
               <IconStop className="mr-2" />
@@ -45,7 +45,7 @@ export function ChatPanel({
           ) : (
             messages?.length > 0 && (
               <Button
-                variant="bordered"
+                variant="flat"
                 onClick={() => reload()}
               >
                 <IconRefresh className="mr-2" />
