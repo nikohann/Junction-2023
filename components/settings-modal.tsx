@@ -42,10 +42,10 @@ export default function Settings() {
                                 defaultValue={500}
                                 className="max-w-md"
                                 />
-                                <ButtonGroup>
-                                <Button>GPT-3,5</Button>
-                                <Button>GPT-3,5 turbo</Button>
-                                <Button>GPT-4</Button>
+                                <ButtonGroup color="primary" className="w-full">
+                                <Button className="w-full" >GPT-3,5</Button>
+                                <Button className="w-full" >GPT-3,5 turbo</Button>
+                                <Button className="w-full" >GPT-4</Button>
                                 </ButtonGroup>
         
                             </ModalBody>
