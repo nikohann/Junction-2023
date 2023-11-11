@@ -1,7 +1,7 @@
 'use client'
 
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
-import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/react";
+import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure, ButtonGroup } from "@nextui-org/react";
 import {Slider} from "@nextui-org/react";
 
 export default function Settings() {
@@ -15,7 +15,7 @@ export default function Settings() {
                 onPress={onOpen}
                 size="sm"
                 color="primary"
-                className='absolute top-3 -left-20'>
+                className='absolute top-3 -left-20 p-1'>
                 <Cog6ToothIcon />
             </Button>
 
@@ -25,7 +25,7 @@ export default function Settings() {
                         <>
                             <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
                             <ModalBody>
-                                <Input type="email" label="Email" placeholder="Enter your email" />
+                
                                 <Slider 
                                 label="Temperature" 
                                 step={0.01} 
@@ -42,20 +42,19 @@ export default function Settings() {
                                 defaultValue={500}
                                 className="max-w-md"
                                 />
-                                <p>
-                                    Magna exercitation reprehenderit magna aute tempor cupidatat consequat elit
-                                    dolor adipisicing. Mollit dolor eiusmod sunt ex incididunt cillum quis.
-                                    Velit duis sit officia eiusmod Lorem aliqua enim laboris do dolor eiusmod.
-                                    Et mollit incididunt nisi consectetur esse laborum eiusmod pariatur
-                                    proident Lorem eiusmod et. Culpa deserunt nostrud ad veniam.
-                                </p>
+                                <ButtonGroup>
+                                <Button>GPT-3,5</Button>
+                                <Button>GPT-3,5 turbo</Button>
+                                <Button>GPT-4</Button>
+                                </ButtonGroup>
+        
                             </ModalBody>
                             <ModalFooter>
                                 <Button color="danger" variant="light" onPress={onClose}>
-                                    Close
+                                    Discard Changes
                                 </Button>
                                 <Button color="primary" onPress={onClose}>
-                                    Action
+                                    Save
                                 </Button>
                             </ModalFooter>
                         </>
