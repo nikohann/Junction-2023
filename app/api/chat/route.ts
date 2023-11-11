@@ -57,6 +57,13 @@ export async function POST(req: Request) {
 
         const [deferredReadable, deferredWritable, writer] = createDeferredStream();
 
+        const send = (json: any) => {
+            data.append(json);
+            writer.write(new Uint8Array([48,58,34,34,10])).then(); // Flush the buffer
+        };
+
+        send({type: "START", messageIndex: messages.length});
+
         const handleJson = async (json: any) => {
             const type = json?.type?.toString() ?? "";
             console.log(JSON.stringify(json));
@@ -84,14 +91,14 @@ export async function POST(req: Request) {
                 const stream = OpenAIStream(response, {
                     experimental_streamData: true,
                     onFinal: () => {
-                        data.close()
+                        writer.close();
+                        data.close();
                     },
                 });
 
                 stream.pipeTo(deferredWritable).then();
             } else {
-                data.append(json);
-                writer.write(new Uint8Array([48,58,34,34,10])).then(); // Flush the buffer
+                send(json);
             }
         };
 
