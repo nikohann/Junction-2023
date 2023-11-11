@@ -50,7 +50,7 @@ export default function Settings() {
                                 <Select
                                 label="Select GPT Model"
                                 placeholder="GPT Model"
-                                selectionMode="multiple"
+                                selectionMode="single"
                                 className="max-w-xs"
                                 >
                                 {['GPT-3', 'GPT-3.5', 'GPT-4'].map((item, i) => (
