@@ -17,6 +17,22 @@ const openai = new OpenAIApi(config)
 
 export const runtime = 'edge'
 
+type NewsItem = {
+  url: string;
+  title: string;
+  summary: string;
+};
+
+type SearchItem = {
+  keyword: string;
+  website: string;
+  news: NewsItem[];
+};
+
+type Data = {
+  searches: SearchItem[];
+};
+
 export async function POST(req: Request) {
   try {
     if (!openAiKey) {
@@ -47,54 +63,13 @@ export async function POST(req: Request) {
       })
     });
 
-    const newsJson = await news.json();
+    const newsData = await news.json();
+    const prompt = newsData.prompt;
 
-    console.log(newsJson)
-
-    const tokenizer = new GPT3Tokenizer({ type: 'gpt3' });
-    let tokenCount = 0;
-    let contextText = '';
+    if (!prompt || prompt.length === 0) {
+      throw new ApplicationError('Failed to generate prompt');
+    }
     
-    for (let i = 0; i < newsJson.searches.length; i++) {
-      // Iterate through each 'news' item in the current 'search'
-      for (let j = 0; j < newsJson.searches[i].news.length; j++) {
-        const newsItem = newsJson.searches[i].news[j];
-        const content = newsItem.summary;
-        const encoded = tokenizer.encode(content);
-        tokenCount += encoded.text.length;
-    
-        if (tokenCount >= 1500) {
-          break;
-        }
-    
-        contextText += `${content.trim()}\n---\n`;
-      }
-    
-      // Check if the token count limit has been reached after processing each search
-      if (tokenCount >= 1500) {
-        break;
-      }
-    }    
-
-    //print context
-    console.log(contextText)
-
-    const prompt = codeBlock`
-      ${oneLine`
-        You are a very enthusiastic Outokumpu steel representative who loves
-        to help people!"
-      `}
-
-      Context sections:
-      ${contextText}
-
-      Question: """
-      ${messages[0].content}
-      """
-
-      Answer as markdown:
-    `
-
     const chatMessage: ChatCompletionRequestMessage = {
       role: 'user',
       content: prompt,
