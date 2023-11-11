@@ -6,9 +6,7 @@ import { cn } from '@/lib/utils'
 import { ChatList } from '@/components/chat-list'
 import { ChatPanel } from '@/components/chat-panel'
 import { EmptyScreen } from '@/components/empty-screen'
-import { ChatScrollAnchor } from '@/components/chat-scroll-anchor'
 import { toast } from 'react-hot-toast'
-import { useLocalStorage } from '@/lib/hooks/use-local-storage'
 
 const IS_PREVIEW = process.env.VERCEL_ENV === 'preview'
 export interface ChatProps extends React.ComponentProps<'div'> {
@@ -36,7 +34,6 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
         {messages.length ? (
           <>
             <ChatList messages={messages} />
-            <ChatScrollAnchor trackVisibility={isLoading} />
           </>
         ) : (
           <EmptyScreen setInput={setInput} />
