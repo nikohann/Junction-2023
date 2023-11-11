@@ -1,27 +1,29 @@
 'use client'
 
-import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure, SliderValue, Select, SelectItem } from "@nextui-org/react";
 import { Slider } from "@nextui-org/react";
 import { ThemeSwitcher } from "./theme-switcher";
 import React from "react";
+import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 
-interface Settings {
+export interface Settings {
     temp: number,
     max_tokens: number,
     gpt_model: string,
 }
 
-export default function SettingsModal({ temp, max_tokens, gpt_model }: Settings) {
+const SettingsModal: React.FC<Settings> = ({ temp, max_tokens, gpt_model }) => {
 
+    console.log("===============")
+    console.log(temp, max_tokens, gpt_model)
+
+    console.log("===============")
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     const [temperature, setTemperature] = React.useState<SliderValue>(temp);
     const [maxTokens, setMaxTokens] = React.useState<SliderValue>(max_tokens);
     const [gptModel, setGptModel] = React.useState<string>("gpt-3.5-turbo");
 
-    console.log("asdasdasd")
-    console.log(temp, max_tokens, gpt_model)
 
     //print states:
     React.useEffect(() => {
@@ -106,3 +108,4 @@ export default function SettingsModal({ temp, max_tokens, gpt_model }: Settings)
         </>
     )
 }
+export default SettingsModal;
