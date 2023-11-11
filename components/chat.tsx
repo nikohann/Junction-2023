@@ -7,6 +7,8 @@ import { ChatList } from '@/components/chat-list'
 import { ChatPanel } from '@/components/chat-panel'
 import { EmptyScreen } from '@/components/empty-screen'
 import { toast } from 'react-hot-toast'
+import SettingsProvider from './settings-provider'
+import { useSettings } from '@/lib/hooks/use-custom-settings'
 
 const IS_PREVIEW = process.env.VERCEL_ENV === 'preview'
 export interface ChatProps extends React.ComponentProps<'div'> {
@@ -14,13 +16,21 @@ export interface ChatProps extends React.ComponentProps<'div'> {
   id?: string
 }
 
+export const Settings = {
+  temp: 0.5,
+  maxTokens: 1050,
+  gptModel: "gpt-3.5-turbo"
+}
+
 export function Chat({ id, initialMessages, className }: ChatProps) {
+  const { settings } = useSettings();
+
   const { messages, append, reload, stop, isLoading, input, setInput } =
     useChat({
       initialMessages,
       id,
       body: {
-        id,
+        settings: settings
       },
       onResponse(response) {
         if (response.status === 401) {
@@ -39,16 +49,18 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
           <EmptyScreen setInput={setInput} />
         )}
       </div>
-      <ChatPanel
-        id={id}
-        isLoading={isLoading}
-        stop={stop}
-        append={append}
-        reload={reload}
-        messages={messages}
-        input={input}
-        setInput={setInput}
-      />
+      <SettingsProvider>
+        <ChatPanel
+          id={id}
+          isLoading={isLoading}
+          stop={stop}
+          append={append}
+          reload={reload}
+          messages={messages}
+          input={input}
+          setInput={setInput}
+        />
+      </SettingsProvider>
     </>
   )
 }

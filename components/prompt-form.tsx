@@ -17,7 +17,7 @@ export function PromptForm({
   onSubmit,
   input,
   setInput,
-  isLoading
+  isLoading,
 }: PromptProps) {
 
   const { formRef, onKeyDown } = useEnterSubmit()

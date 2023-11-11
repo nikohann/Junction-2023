@@ -5,6 +5,7 @@ import {
 } from 'openai-edge'
 import { OpenAIStream, StreamingTextResponse } from 'ai'
 import { ApplicationError, UserError } from '@/lib/errors'
+import Stream from 'stream';
 
 type NewsItem = {
   url: string;
@@ -31,6 +32,7 @@ const openai = new OpenAIApi(config)
 export const runtime = 'edge'
 
 export async function POST(req: Request) {
+  
   try {
     if (!openAiKey) {
       throw new ApplicationError('Missing environment variable OPENAI_KEY')
@@ -42,12 +44,16 @@ export async function POST(req: Request) {
       throw new UserError('Missing request data')
     }
 
-    const { messages } = json;
+    
+    const { messages, settings } = json;
+
+    console.log("myCustomValue: " + JSON.stringify(settings));
 
     if (!messages || !messages[0].content) {
       throw new UserError('Missing query in request data')
     }
 
+    throw new UserError("asdasd");
 
     const news = await fetch("http://65.109.134.221:3000/api/ask", {
       method: "POST",

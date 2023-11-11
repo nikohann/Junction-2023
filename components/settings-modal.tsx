@@ -5,15 +5,16 @@ import { Slider } from "@nextui-org/react";
 import { ThemeSwitcher } from "./theme-switcher";
 import React from "react";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
+import { useSettings } from "@/lib/hooks/use-custom-settings";
 
 export default function SettingsModal(){
 
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const { settings, setSettings } = useSettings();
 
-    const [temperature, setTemperature] = React.useState<SliderValue>(0.5);
-    const [maxTokens, setMaxTokens] = React.useState<SliderValue>(1050);
+    const [temperature, setTemperature] = React.useState<SliderValue>(settings.temp);
+    const [maxTokens, setMaxTokens] = React.useState<SliderValue>(settings.maxTokens);
     const [gptModel, setGptModel] = React.useState<string>("gpt-3.5-turbo");
-
 
     //print states:
     React.useEffect(() => {
@@ -26,7 +27,10 @@ export default function SettingsModal(){
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log("handleSave");
+
+        setSettings({temp: temperature as number, maxTokens: maxTokens as number, gptModel: gptModel});
+
+        console.log("new settings: " + JSON.stringify(settings));
     }
 
     return (
