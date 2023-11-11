@@ -5,7 +5,7 @@ import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader
 
 
 import {Slider} from "@nextui-org/react";
-import { ThemeSwitcher } from "./ThemeSwitcher";
+import { ThemeSwitcher } from "./theme-switcher";
 
 export default function Settings() {
 
