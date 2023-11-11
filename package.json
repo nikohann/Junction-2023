@@ -12,6 +12,7 @@
     "@heroicons/react": "^2.0.18",
     "@nextui-org/react": "^2.2.9",
     "ai": "^2.2.22",
+    "axios": "^1.6.1",
     "framer-motion": "^10.16.4",
     "next": "14.0.2",
     "next-themes": "^0.2.1",

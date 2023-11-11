@@ -7,6 +7,7 @@ import { ChatList } from '@/components/chat-list'
 import { ChatPanel } from '@/components/chat-panel'
 import { EmptyScreen } from '@/components/empty-screen'
 import { toast } from 'react-hot-toast'
+import {useEffect} from "react";
 
 const IS_PREVIEW = process.env.VERCEL_ENV === 'preview'
 export interface ChatProps extends React.ComponentProps<'div'> {
@@ -15,7 +16,7 @@ export interface ChatProps extends React.ComponentProps<'div'> {
 }
 
 export function Chat({ id, initialMessages, className }: ChatProps) {
-  const { messages, append, reload, stop, isLoading, input, setInput } =
+  const { data, messages, append, reload, stop, isLoading, input, setInput } =
     useChat({
       initialMessages,
       id,
@@ -28,6 +29,11 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
         }
       }
     })
+
+    useEffect(() => {
+        console.log(data);
+    }, [data]);
+
   return (
     <>
       <div className={cn('pb-[200px] pt-4 md:mt-16', className)}>
