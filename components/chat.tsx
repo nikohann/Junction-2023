@@ -58,16 +58,14 @@ export function Chat({id, initialMessages, className}: ChatProps) {
         // If lastProcessedIndexRef.current === data.length - 1, then the data array has been processed
         while (lastProcessedIndexRef.current < data.length - 1) {
             const message = data[lastProcessedIndexRef.current + 1];
-
+            console.log(message);
             const type = message?.type?.toString() ?? "";
             if (type === "START") {
                 const index = message?.messageIndex as number;
 
                 setMessageExtra(produce((draft: any) => {
                     console.log("index", index);
-                    draft["" + index] = {
-                        articles: []
-                    };
+                    draft["" + index] = {articles: []};
                 }));
 
                 currentMessageIndexRef.current = index;
@@ -90,10 +88,20 @@ export function Chat({id, initialMessages, className}: ChatProps) {
                 // Find the article and set error: true (by url)
                 const articleUrl = message?.articleUrl as string;
 
-                setMessageExtra((messageExtra: any) => produce(messageExtra,(draft: any) => {
+                setMessageExtra((messageExtra: any) => produce(messageExtra, (draft: any) => {
                     draft["" + currentMessageIndexRef.current].articles.forEach((article: any) => {
                         if (article.url === articleUrl) {
                             article.error = true;
+                        }
+                    });
+                }));
+            } else if(type === "ARTICLE_FETCHED") {
+                const articleUrl = message?.article?.url as string;
+
+                setMessageExtra((messageExtra: any) => produce(messageExtra, (draft: any) => {
+                    draft["" + currentMessageIndexRef.current].articles.forEach((article: any) => {
+                        if (article.url === articleUrl) {
+                            article.fetched = true;
                         }
                     });
                 }));
@@ -105,6 +113,9 @@ export function Chat({id, initialMessages, className}: ChatProps) {
                     draft["" + currentMessageIndexRef.current].articles.forEach((article: any) => {
                         if (article.url === articleUrl) {
                             article.done = true;
+                            article.summary = message?.article?.summary as string;
+                            article.published = message?.article?.published as string;
+                            article.title = message?.article?.title as string;
                         }
                     });
                 }));
