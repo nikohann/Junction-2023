@@ -61,7 +61,7 @@ export function PromptForm({
         ref={formRef}
         className='w-full'
       >
-        <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background sm:rounded-md sm:border">
+        <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background rounded-lg border">
 
           <Textarea
             ref={inputRef}
@@ -70,7 +70,7 @@ export function PromptForm({
             rows={1}
             value={input}
             onChange={e => setInput(e.target.value)}
-            placeholder="Send a message."
+            placeholder="Send a message..."
             spellCheck={false}
             className="min-h-[60px] w-full resize-none bg-transparent pl-4 pr-14 py-[1.3rem] focus-within:outline-none sm:text-sm"
           />
