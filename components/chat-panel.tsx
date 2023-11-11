@@ -38,7 +38,6 @@ export function ChatPanel({
             <Button
               variant="bordered"
               onClick={() => stop()}
-              className="bg-background"
             >
               <IconStop className="mr-2" />
               Stop generating
@@ -48,7 +47,6 @@ export function ChatPanel({
               <Button
                 variant="bordered"
                 onClick={() => reload()}
-                className="bg-background"
               >
                 <IconRefresh className="mr-2" />
                 Regenerate response
