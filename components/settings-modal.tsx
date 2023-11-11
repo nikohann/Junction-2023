@@ -3,27 +3,19 @@
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure, SliderValue, Select, SelectItem } from "@nextui-org/react";
 import { Slider } from "@nextui-org/react";
 import { ThemeSwitcher } from "./theme-switcher";
-import React from "react";
+import React, { useContext } from "react";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
+import { SettingsContext } from "./chat";
 
-export interface Settings {
-    temp: number,
-    max_tokens: number,
-    gpt_model: string,
-}
+export default function SettingsModal(){
 
-const SettingsModal: React.FC<Settings> = ({ temp, max_tokens, gpt_model }) => {
-
-    console.log("===============")
-    console.log(temp, max_tokens, gpt_model)
-
-    console.log("===============")
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-    const [temperature, setTemperature] = React.useState<SliderValue>(temp);
-    const [maxTokens, setMaxTokens] = React.useState<SliderValue>(max_tokens);
+    const settings = useContext(SettingsContext);
+    
+    const [temperature, setTemperature] = React.useState<SliderValue>(settings.temp);
+    const [maxTokens, setMaxTokens] = React.useState<SliderValue>(settings.maxTokens);
     const [gptModel, setGptModel] = React.useState<string>("gpt-3.5-turbo");
-
 
     //print states:
     React.useEffect(() => {
@@ -36,7 +28,12 @@ const SettingsModal: React.FC<Settings> = ({ temp, max_tokens, gpt_model }) => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log("handleSave");
+
+        settings.gptModel = gptModel;
+        settings.maxTokens = maxTokens as number;
+        settings.temp = temperature as number;
+
+        console.log("new settings: " + JSON.stringify(settings));
     }
 
     return (
@@ -69,11 +66,11 @@ const SettingsModal: React.FC<Settings> = ({ temp, max_tokens, gpt_model }) => {
                                 <Slider
                                     label="Max Tokens"
                                     step={10}
-                                    maxValue={1024}
+                                    maxValue={8000}
                                     minValue={0}
                                     value={maxTokens}
                                     onChange={setMaxTokens}
-                                    defaultValue={500}
+                                    defaultValue={200}
                                     className="max-w-md"
                                 />
                                 <Select
@@ -81,7 +78,7 @@ const SettingsModal: React.FC<Settings> = ({ temp, max_tokens, gpt_model }) => {
                                     placeholder="GPT Model"
                                     className="max-w-xs"
                                     onChange={handleSelectionChange}
-                                    selectedKeys={gptModel}
+                                    value={gptModel}
                                 >
                                     {['GPT-3.5-turbo', 'GPT-3.5', 'GPT-4'].map((item, i) => (
                                         <SelectItem key={i} value={item}>
@@ -97,7 +94,7 @@ const SettingsModal: React.FC<Settings> = ({ temp, max_tokens, gpt_model }) => {
                                 <Button color="danger" variant="light" onPress={onClose}>
                                     Discard Changes
                                 </Button>
-                                <Button color="primary" type="submit">
+                                <Button color="primary" type="submit" onPress={onClose}>
                                     Save
                                 </Button>
                             </ModalFooter>
@@ -108,4 +105,3 @@ const SettingsModal: React.FC<Settings> = ({ temp, max_tokens, gpt_model }) => {
         </>
     )
 }
-export default SettingsModal;

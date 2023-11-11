@@ -7,21 +7,39 @@ import { ChatList } from '@/components/chat-list'
 import { ChatPanel } from '@/components/chat-panel'
 import { EmptyScreen } from '@/components/empty-screen'
 import { toast } from 'react-hot-toast'
+import { createContext, useContext } from 'react'
+import React from 'react'
 import {useEffect} from "react";
 
-const IS_PREVIEW = process.env.VERCEL_ENV === 'preview'
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
   id?: string
 }
 
+export interface Settings {
+  temp: number
+  maxTokens: number
+  gptModel: string
+}
+
+const defaultSettings: Settings = {
+  temp: 0.5,
+  maxTokens: 50,
+  gptModel: "gpt-3.5-turbo"
+}
+
+export const SettingsContext = createContext(defaultSettings);
+
 export function Chat({ id, initialMessages, className }: ChatProps) {
+
+  const settings = useContext(SettingsContext);
+
   const { data, messages, append, reload, stop, isLoading, input, setInput } =
     useChat({
       initialMessages,
       id,
       body: {
-        id,
+        settings: settings
       },
       onResponse(response) {
         if (response.status === 401) {
@@ -45,16 +63,18 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
           <EmptyScreen setInput={setInput} />
         )}
       </div>
-      <ChatPanel
-        id={id}
-        isLoading={isLoading}
-        stop={stop}
-        append={append}
-        reload={reload}
-        messages={messages}
-        input={input}
-        setInput={setInput}
-      />
+      <SettingsContext.Provider value={settings}>
+        <ChatPanel
+          id={id}
+          isLoading={isLoading}
+          stop={stop}
+          append={append}
+          reload={reload}
+          messages={messages}
+          input={input}
+          setInput={setInput}
+        />
+      </SettingsContext.Provider>
     </>
   )
 }
