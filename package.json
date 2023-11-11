@@ -12,7 +12,6 @@
     "@heroicons/react": "^2.0.18",
     "@nextui-org/react": "^2.2.9",
     "ai": "^2.2.22",
-    "common-tags": "^1.8.2",
     "framer-motion": "^10.16.4",
     "gpt3-tokenizer": "^1.1.5",
     "next": "14.0.2",

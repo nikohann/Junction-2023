@@ -5,8 +5,6 @@ import {
 } from 'openai-edge'
 import { OpenAIStream, StreamingTextResponse } from 'ai'
 import { ApplicationError, UserError } from '@/lib/errors'
-import { codeBlock, oneLine } from 'common-tags'
-import GPT3Tokenizer from 'gpt3-tokenizer'
 
 type NewsItem = {
   url: string;
