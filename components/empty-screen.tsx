@@ -26,9 +26,8 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
           Welcome to Next.js AI Chatbot!
         </h1>
         <p className="mb-2 leading-normal text-muted-foreground">
-          This is an open source AI chatbot app template built with{' '}
-            Vercel KV
-          .
+          This is an open source AI chatbot app template built with Vercel KV.
+          This chatbot specializes in answering questions about metal industry with sources.
         </p>
         <p className="leading-normal text-muted-foreground">
           You can start a conversation here or try the following examples:
