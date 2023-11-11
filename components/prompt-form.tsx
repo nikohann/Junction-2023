@@ -42,25 +42,8 @@ export function PromptForm({
       }}
       ref={formRef}
     >
-      <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background px-8 sm:rounded-md sm:border sm:px-12">
+      <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background sm:rounded-md sm:border">
 
-        <Tooltip content="New Chat">
-          <Button
-            variant='bordered'
-            size='sm'
-            onClick={e => {
-              e.preventDefault()
-              router.refresh()
-              router.push('/')
-            }}
-            className={cn(
-              'absolute left-0 top-4 h-8 w-8 rounded-full bg-background p-0 sm:left-4'
-            )}
-          >
-            <IconPlus />
-            <span className="sr-only">New Chat</span>
-          </Button>
-        </Tooltip>
         <Textarea
           ref={inputRef}
           tabIndex={0}
@@ -72,19 +55,18 @@ export function PromptForm({
           spellCheck={false}
           className="min-h-[60px] w-full resize-none bg-transparent px-4 py-[1.3rem] focus-within:outline-none sm:text-sm"
         />
+
         <div className="absolute right-0 top-4 sm:right-4">
 
-          <Tooltip content="Send message">
-            <Button
-              type="submit"
-              size="sm"
-              isIconOnly
-              disabled={isLoading || input === ''}
-            >
-              <IconArrowElbow />
-              <span className="sr-only">Send message</span>
-            </Button>
-          </Tooltip>
+          <Button
+            type="submit"
+            size="sm"
+            isIconOnly
+            disabled={isLoading || input === ''}
+          >
+            <IconArrowElbow />
+            <span className="sr-only">Send message</span>
+          </Button>
         </div>
       </div>
     </form>
