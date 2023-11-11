@@ -4,7 +4,8 @@ import Textarea from 'react-textarea-autosize'
 
 import { IconArrowElbow, IconPlus } from '@/components/ui/icons'
 import { useEnterSubmit } from '@/lib/hooks/use-enter-submit'
-import { Button } from '@nextui-org/react'
+import { Button, Tooltip, useDisclosure } from '@nextui-org/react'
+import { Cog6ToothIcon } from '@heroicons/react/24/outline'
 import Settings from './settings-modal'
 
 export interface PromptProps
