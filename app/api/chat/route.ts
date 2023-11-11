@@ -5,7 +5,6 @@ import {
 } from 'openai-edge'
 import { OpenAIStream, StreamingTextResponse } from 'ai'
 import { ApplicationError, UserError } from '@/lib/errors'
-import Stream from 'stream';
 
 type NewsItem = {
   url: string;
@@ -47,13 +46,11 @@ export async function POST(req: Request) {
     
     const { messages, settings } = json;
 
-    console.log("myCustomValue: " + JSON.stringify(settings));
+    console.log("settings: " + JSON.stringify(settings));
 
     if (!messages || !messages[0].content) {
       throw new UserError('Missing query in request data')
     }
-
-    throw new UserError("asdasd");
 
     const news = await fetch("http://65.109.134.221:3000/api/ask", {
       method: "POST",
@@ -79,10 +76,10 @@ export async function POST(req: Request) {
     }
 
     const response = await openai.createChatCompletion({
-      model: 'gpt-3.5-turbo',
+      model: 'gpt-4',
       messages: [chatMessage],
-      max_tokens: 512,
-      temperature: 0,
+      max_tokens: settings.maxTokens,
+      temperature: settings.temp,
       stream: true,
     })
 

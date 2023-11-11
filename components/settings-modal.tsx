@@ -3,15 +3,16 @@
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure, SliderValue, Select, SelectItem } from "@nextui-org/react";
 import { Slider } from "@nextui-org/react";
 import { ThemeSwitcher } from "./theme-switcher";
-import React from "react";
+import React, { useContext } from "react";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
-import { useSettings } from "@/lib/hooks/use-custom-settings";
+import { SettingsContext } from "./chat";
 
 export default function SettingsModal(){
 
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const { settings, setSettings } = useSettings();
 
+    const settings = useContext(SettingsContext);
+    
     const [temperature, setTemperature] = React.useState<SliderValue>(settings.temp);
     const [maxTokens, setMaxTokens] = React.useState<SliderValue>(settings.maxTokens);
     const [gptModel, setGptModel] = React.useState<string>("gpt-3.5-turbo");
@@ -28,7 +29,9 @@ export default function SettingsModal(){
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        setSettings({temp: temperature as number, maxTokens: maxTokens as number, gptModel: gptModel});
+        settings.gptModel = gptModel;
+        settings.maxTokens = maxTokens as number;
+        settings.temp = temperature as number;
 
         console.log("new settings: " + JSON.stringify(settings));
     }
@@ -63,11 +66,11 @@ export default function SettingsModal(){
                                 <Slider
                                     label="Max Tokens"
                                     step={10}
-                                    maxValue={1024}
+                                    maxValue={8000}
                                     minValue={0}
                                     value={maxTokens}
                                     onChange={setMaxTokens}
-                                    defaultValue={500}
+                                    defaultValue={200}
                                     className="max-w-md"
                                 />
                                 <Select
@@ -91,7 +94,7 @@ export default function SettingsModal(){
                                 <Button color="danger" variant="light" onPress={onClose}>
                                     Discard Changes
                                 </Button>
-                                <Button color="primary" type="submit">
+                                <Button color="primary" type="submit" onPress={onClose}>
                                     Save
                                 </Button>
                             </ModalFooter>
