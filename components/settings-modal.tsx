@@ -1,26 +1,17 @@
 'use client'
 
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
-<<<<<<< Updated upstream
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure, SliderValue, Select, SelectItem } from "@nextui-org/react";
-=======
-import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure, SliderValue, Select, SelectItem } from "@nextui-org/react";
->>>>>>> Stashed changes
 import { Slider } from "@nextui-org/react";
 import { ThemeSwitcher } from "./theme-switcher";
 import React from "react";
 
 interface Settings {
-<<<<<<< Updated upstream
     temp: number,
-=======
-    temperature: number,
->>>>>>> Stashed changes
     max_tokens: number,
     gpt_model: string,
 }
 
-<<<<<<< Updated upstream
 export default function SettingsModal({ temp, max_tokens, gpt_model }: Settings) {
 
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -45,22 +36,6 @@ export default function SettingsModal({ temp, max_tokens, gpt_model }: Settings)
         e.preventDefault();
         console.log("handleSave");
     }
-=======
-export default async function Settings() {
-
-    const settings: Settings = await fetch('/api/settings').then(res => res.json());
-
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
-    const [temperature, setTemperature] = React.useState<SliderValue>(settings.temperature);
-    const [maxTokens, setMaxTokens] = React.useState<SliderValue>(settings.max_tokens);
-    const [gptModel, setGptModel] = React.useState(new Set(settings.gpt_model));
-
-    const handleSelectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setGptModel(new Set([e.target.value]));
-    };
-
->>>>>>> Stashed changes
 
     return (
         <>
@@ -76,11 +51,7 @@ export default async function Settings() {
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onClose) => (
-<<<<<<< Updated upstream
                         <form onSubmit={handleSubmit}>
-=======
-                        <form>
->>>>>>> Stashed changes
                             <ModalHeader className="flex flex-col gap-1">Settings</ModalHeader>
                             <ModalBody>
                                 <Slider
