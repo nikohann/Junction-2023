@@ -17,17 +17,12 @@ export interface ChatProps extends React.ComponentProps<'div'> {
 }
 
 export function Chat({ id, initialMessages, className }: ChatProps) {
-  const [previewToken, setPreviewToken] = useLocalStorage<string | null>(
-    'ai-token',
-    null
-  )
   const { messages, append, reload, stop, isLoading, input, setInput } =
     useChat({
       initialMessages,
       id,
       body: {
         id,
-        previewToken
       },
       onResponse(response) {
         if (response.status === 401) {
@@ -37,7 +32,7 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
     })
   return (
     <>
-      <div className={cn('pb-[200px] pt-4 md:pt-10', className)}>
+      <div className={cn('pb-[200px] pt-4 md:mt-16', className)}>
         {messages.length ? (
           <>
             <ChatList messages={messages} />
