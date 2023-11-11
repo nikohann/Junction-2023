@@ -1,9 +1,6 @@
-import type { NextRequest } from 'next/server'
-import GPT3Tokenizer from 'gpt3-tokenizer'
 import {
   Configuration,
   OpenAIApi,
-  CreateModerationResponse,
   ChatCompletionRequestMessage,
 } from 'openai-edge'
 import { OpenAIStream, StreamingTextResponse } from 'ai'
@@ -33,31 +30,9 @@ export async function POST(req: Request) {
 
     const { messages } = json;
 
-    if (!messages) {
+    if (!messages || !messages[0].content) {
       throw new UserError('Missing query in request data')
     }
-
-    console.log("hello")
-    console.log("messages: " + messages)
-    // Moderate the content to comply with OpenAI T&C
-    const sanitizedQuery = messages.trim()
-    const moderationResponse: CreateModerationResponse = await openai
-      .createModeration({ input: sanitizedQuery })
-      .then((res) => res.json())
-
-    const [results] = moderationResponse.results
-
-    if (results.flagged) {
-      throw new UserError('Flagged content', {
-        flagged: true,
-        categories: results.categories,
-      })
-    }
-
-   
-    const tokenizer = new GPT3Tokenizer({ type: 'gpt3' })
-    let tokenCount = 0
-    let contextText = ''
 
 
     /*
@@ -75,24 +50,21 @@ export async function POST(req: Request) {
     }
     */
 
+    let contextText = 'There is no context available for this question.'
     const prompt = codeBlock`
       ${oneLine`
         You are a very enthusiastic Supabase representative who loves
-        to help people! Given the following sections from the Supabase
-        documentation, answer the question using only that information,
-        outputted in markdown format. If you are unsure and the answer
-        is not explicitly written in the documentation, say
-        "Sorry, I don't know how to help with that."
+        to help people!"
       `}
 
       Context sections:
       ${contextText}
 
       Question: """
-      ${sanitizedQuery}
+      ${messages[0].content}
       """
 
-      Answer as markdown (including related code snippets if available):
+      Answer as markdown:
     `
 
     const chatMessage: ChatCompletionRequestMessage = {
