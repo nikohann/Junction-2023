@@ -20,7 +20,7 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
     <div className="mx-auto max-w-2xl">
       <div className="rounded-lg border p-8">
         <h1 className="mb-2 text-lg font-semibold">
-          PROJEKTIN NIMI TÄHÄN 
+          IntelliMetal
         </h1>
         <p className="mb-2 leading-normal">
           This chatbot specializes in answering questions about metal industry with sources.
