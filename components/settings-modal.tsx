@@ -16,22 +16,11 @@ export default function SettingsModal() {
 
     const [temperature, setTemperature] = React.useState<SliderValue>(settings.temp);
     const [maxTokens, setMaxTokens] = React.useState<SliderValue>(settings.maxTokens);
-    const [gptModel, setGptModel] = React.useState<Iterable<Key>>(["gpt-3.5-turbo"]);
+    const [gptModel, setGptModel] = React.useState<Iterable<Key>>([settings.gptModel]);
 
-    const handleSubmit = async () => {
-
-        settings.gptModel = gptModel.currentKey as string;
+    function save() {
         settings.maxTokens = maxTokens as number;
         settings.temp = temperature as number;
-
-        console.log(JSON.stringify(settings));
-    }
-
-    const save = async () => {
-        settings.gptModel = gptModel as string;
-        settings.maxTokens = maxTokens as number;
-        settings.temp = temperature as number;
-
         console.log(JSON.stringify(settings));
     }
 
@@ -47,7 +36,6 @@ export default function SettingsModal() {
 
 
     const handleGptModelChange = (newValue: Iterable<Key>) => {
-        setGptModel(newValue);
         save();
     };
 
@@ -80,7 +68,7 @@ export default function SettingsModal() {
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onClose) => (
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={save}>
                             <ModalHeader className="flex flex-col gap-1">Settings</ModalHeader>
                             <ModalBody>
                                 <Slider
