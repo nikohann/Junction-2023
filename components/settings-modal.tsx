@@ -6,7 +6,7 @@ import { ThemeSwitcher } from "./theme-switcher";
 import React, { useContext } from "react";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { SettingsContext } from "./chat";
-import {Key} from '@react-types/shared';
+import { Key } from '@react-types/shared';
 
 export default function SettingsModal() {
 
@@ -16,15 +16,28 @@ export default function SettingsModal() {
 
     const [temperature, setTemperature] = React.useState<SliderValue>(settings.temp);
     const [maxTokens, setMaxTokens] = React.useState<SliderValue>(settings.maxTokens);
-    const [gptModel, setGptModel] = React.useState<Iterable<Key>>(["gpt-3.5-turbo"]);
+    const [gptModel, setGptModel] = React.useState<Iterable<Key>>([settings.gptModel]);
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        settings.gptModel = gptModel as string;
+    function save() {
         settings.maxTokens = maxTokens as number;
         settings.temp = temperature as number;
+        console.log(JSON.stringify(settings));
     }
+
+    const handleTemperatureChange = (newValue: SliderValue) => {
+        setTemperature(newValue);
+        save();
+    };
+
+    const handleMaxTokensChange = (newValue: SliderValue) => {
+        setMaxTokens(newValue);
+        save();
+    };
+
+
+    const handleGptModelChange = (newValue: Iterable<Key>) => {
+        save();
+    };
 
     const models = [
         {
@@ -55,7 +68,7 @@ export default function SettingsModal() {
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onClose) => (
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={save}>
                             <ModalHeader className="flex flex-col gap-1">Settings</ModalHeader>
                             <ModalBody>
                                 <Slider
@@ -64,7 +77,7 @@ export default function SettingsModal() {
                                     maxValue={1.0}
                                     minValue={0.0}
                                     value={temperature}
-                                    onChange={setTemperature}
+                                    onChange={handleTemperatureChange}
                                     defaultValue={0.5}
                                     className="max-w-md"
                                 />
@@ -74,7 +87,7 @@ export default function SettingsModal() {
                                     maxValue={8000}
                                     minValue={0}
                                     value={maxTokens}
-                                    onChange={setMaxTokens}
+                                    onChange={handleMaxTokensChange}
                                     defaultValue={200}
                                     className="max-w-md"
                                 />
@@ -83,7 +96,7 @@ export default function SettingsModal() {
                                     placeholder="GPT Model"
                                     className="max-w-xs"
                                     defaultSelectedKeys={gptModel}
-                                    onSelectionChange={setGptModel}
+                                    onSelectionChange={handleGptModelChange}
                                 >
                                     {models.map((model, i) => (
                                         <SelectItem key={model.value} value={model.value}>
@@ -96,11 +109,8 @@ export default function SettingsModal() {
 
                             </ModalBody>
                             <ModalFooter>
-                                <Button color="danger" variant="light" onPress={onClose}>
-                                    Discard Changes
-                                </Button>
                                 <Button color="primary" type="submit" onPress={onClose}>
-                                    Save
+                                    Close
                                 </Button>
                             </ModalFooter>
                         </form>
