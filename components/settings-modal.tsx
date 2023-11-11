@@ -48,7 +48,7 @@ export default function SettingsModal() {
                 onPress={onOpen}
                 size="sm"
                 color="primary"
-                className='absolute top-3 -left-20 p-1'>
+                className='absolute -left-10 p-1 h-full'>
                 <Cog6ToothIcon />
             </Button>
 
