@@ -2,7 +2,7 @@
 
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/react";
-
+import {Slider} from "@nextui-org/react";
 
 export default function Settings() {
 
@@ -25,11 +25,22 @@ export default function Settings() {
                             <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
                             <ModalBody>
                                 <Input type="email" label="Email" placeholder="Enter your email" />
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Nullam pulvinar risus non risus hendrerit venenatis.
-                                    Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                                </p>
+                                <Slider 
+                                label="Temperature" 
+                                step={0.01} 
+                                maxValue={1.0} 
+                                minValue={0.0} 
+                                defaultValue={0.5}
+                                className="max-w-md"
+                                />
+                                <Slider 
+                                label="Max Tokens" 
+                                step={1} 
+                                maxValue={1024} 
+                                minValue={0} 
+                                defaultValue={500}
+                                className="max-w-md"
+                                />
                                 <p>
                                     Magna exercitation reprehenderit magna aute tempor cupidatat consequat elit
                                     dolor adipisicing. Mollit dolor eiusmod sunt ex incididunt cillum quis.
