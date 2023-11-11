@@ -87,7 +87,16 @@ export function Chat({id, initialMessages, className}: ChatProps) {
                     });
                 }));
             } else if(type === "ARTICLE_ERROR") {
-                // TODO:
+                // Find the article and set error: true (by url)
+                const articleUrl = message?.articleUrl as string;
+
+                setMessageExtra((messageExtra: any) => produce(messageExtra,(draft: any) => {
+                    draft["" + currentMessageIndexRef.current].articles.forEach((article: any) => {
+                        if (article.url === articleUrl) {
+                            article.error = true;
+                        }
+                    });
+                }));
             } else if(type === "ARTICLE_DONE") {
 
                 const articleUrl = message?.articleUrl as string;
@@ -105,16 +114,12 @@ export function Chat({id, initialMessages, className}: ChatProps) {
         }
     }, [data]);
 
-    useEffect(() => {
-        console.log("messageExtra", messageExtra);
-    }, [messageExtra]);
-
     return (
         <>
             <div className={cn('pb-[200px] pt-4 md:mt-16', className)}>
                 {messages.length ? (
                     <>
-                        <ChatList messages={messages} messageExtra={messageExtra}/>
+                        <ChatList messages={messages} messageExtra={messageExtra ?? {}}/>
                     </>
                 ) : (
                     <EmptyScreen setInput={setInput}/>
