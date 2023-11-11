@@ -5,16 +5,13 @@ import { Button } from '@nextui-org/react'
 
 const exampleMessages = [
   {
-    heading: 'Explain technical concepts',
-    message: `What is a "serverless function"?`
+    heading: 'What is the expected development of stainless steel market pricing?',
   },
   {
-    heading: 'Summarize an article',
-    message: 'Summarize the following article for a 2nd grader: \n'
+    heading: 'What recent news state about possible energy price developments?',
   },
   {
-    heading: 'Draft an email',
-    message: `Draft an email to my boss about the following: \n`
+    heading: 'What are the most recent patents granted in the area of stainless steel?',
   }
 ]
 
@@ -23,10 +20,9 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
     <div className="mx-auto max-w-2xl px-10">
       <div className="rounded-lg border bg-background p-8">
         <h1 className="mb-2 text-lg font-semibold">
-          Welcome to Next.js AI Chatbot!
+          PROJEKTIN NIMI TÄHÄN 
         </h1>
         <p className="mb-2 leading-normal text-muted-foreground">
-          This is an open source AI chatbot app template built with Vercel KV.
           This chatbot specializes in answering questions about metal industry with sources.
         </p>
         <p className="leading-normal text-muted-foreground">
@@ -37,8 +33,8 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
             <Button
               key={index}
               variant="light"
-              className="h-auto p-0 text-base"
-              onClick={() => setInput(message.message)}
+              className="h-auto -ml-1 p-1 text-base"
+              onClick={() => setInput(message.heading)}
             >
               <IconArrowRight className="mr-2 text-muted-foreground" />
               {message.heading}
