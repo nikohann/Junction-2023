@@ -18,7 +18,7 @@ const exampleMessages = [
 export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
   return (
     <Card className="mx-auto max-w-2xl">
-      <CardBody className="rounded-lg border p-8">
+      <CardBody className="rounded-lg p-8">
         <h1 className="mb-2 text-3xl font-bold text-primary">
           IntelliMetal
         </h1>

@@ -62,7 +62,7 @@ export function PromptForm({
         ref={formRef}
         className='w-full'
       >
-        <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background rounded-lg border">
+        <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background rounded-lg">
 
           <Textarea
             ref={inputRef}
