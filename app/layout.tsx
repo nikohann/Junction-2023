@@ -1,10 +1,8 @@
 import { Metadata } from 'next'
 
-import { Toaster } from 'react-hot-toast'
-
 import '@/app/globals.css'
-import { cn } from '@/lib/utils'
-import { NextUIProvider } from '@nextui-org/react'
+import { Chatbar } from '@/components/navbar'
+import { Providers } from '@/components/providers'
 
 export const metadata: Metadata = {
   title: {
@@ -29,21 +27,15 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <head />
-      <body
-        className={cn(
-          'font-sans antialiased',
-        )}
-      >
-        <Toaster />
-        <NextUIProvider>
+      <body>
+        <Providers>
           <div className="flex flex-col min-h-screen">
-            {/* @ts-ignore */}
             <Chatbar />
             <main className="flex flex-col flex-1 bg-muted/50">{children}</main>
           </div>
-        </NextUIProvider>
+        </Providers>
       </body>
     </html>
   )
