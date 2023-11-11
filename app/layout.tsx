@@ -24,7 +24,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <head />
-      <body className="h-screen text-foreground bg-background font-sans antialiased bg-gradient-to-r from-primary-100 via-secondary-50">
+      <body className="h-screen text-foreground bg-background font-sans antialiased bg-gradient-to-br from-primary-200 via-secondary-200">
         <Providers>
           <main className="flex flex-col flex-1 bg-muted/50">{children}</main>
         </Providers>
