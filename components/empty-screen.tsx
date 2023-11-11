@@ -22,10 +22,10 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
         <h1 className="mb-2 text-lg font-semibold">
           PROJEKTIN NIMI TÄHÄN 
         </h1>
-        <p className="mb-2 leading-normal text-muted-foreground">
+        <p className="mb-2 leading-normal">
           This chatbot specializes in answering questions about metal industry with sources.
         </p>
-        <p className="leading-normal text-muted-foreground">
+        <p className="leading-normal">
           You can start a conversation here or try the following examples:
         </p>
         <div className="mt-4 flex flex-col items-start space-y-2">
@@ -36,7 +36,7 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
               className="h-auto -ml-1 p-1 text-base"
               onClick={() => setInput(message.heading)}
             >
-              <IconArrowRight className="mr-2 text-muted-foreground" />
+              <IconArrowRight className="mr-2" />
               {message.heading}
             </Button>
           ))}
