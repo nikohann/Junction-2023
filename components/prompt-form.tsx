@@ -66,6 +66,7 @@ export function PromptForm({
             <Button
               type="submit"
               size="sm"
+              color='primary'
               isIconOnly
               disabled={isLoading || input === ''}
             >

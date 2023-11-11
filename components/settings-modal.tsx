@@ -14,7 +14,8 @@ export default function Settings() {
                 isIconOnly
                 onPress={onOpen}
                 size="sm"
-                className='absolute top-3 -left-20 bg-gradient-to-tr from-blue-500 to-green-500 text-white shadow-lg'>
+                color="primary"
+                className='absolute top-3 -left-20'>
                 <Cog6ToothIcon />
             </Button>
 
