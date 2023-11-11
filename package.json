@@ -10,9 +10,12 @@
   },
   "dependencies": {
     "@nextui-org/react": "^2.2.9",
+    "@types/common-tags": "^1.8.4",
     "ai": "^2.2.22",
     "framer-motion": "^10.16.4",
+    "gpt3-tokenizer": "^1.1.5",
     "next": "14.0.2",
+    "openai-edge": "^1.2.2",
     "react": "^18",
     "react-hot-toast": "^2.4.1",
     "react-intersection-observer": "^9.5.3",
