@@ -33,7 +33,7 @@ export default function Settings() {
                 
                                 <Slider 
                                 label="Temperature" 
-                                step={0.01} 
+                                step={0.1} 
                                 maxValue={1.0} 
                                 minValue={0.0} 
                                 defaultValue={0.5}
@@ -41,7 +41,7 @@ export default function Settings() {
                                 />
                                 <Slider 
                                 label="Max Tokens" 
-                                step={1} 
+                                step={10}
                                 maxValue={1024} 
                                 minValue={0} 
                                 defaultValue={500}
