@@ -28,7 +28,7 @@ export default function Settings() {
                 <ModalContent>
                     {(onClose) => (
                         <>
-                            <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
+                            <ModalHeader className="flex flex-col gap-1">Settings</ModalHeader>
                             <ModalBody>
                 
                                 <Slider 
