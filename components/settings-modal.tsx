@@ -48,8 +48,8 @@ export default function Settings() {
                                 className="max-w-md"
                                 />
                                 <Select
-                                label="Select Gpt model"
-                                placeholder="Gpt Model"
+                                label="Select GPT Model"
+                                placeholder="GPT Model"
                                 selectionMode="multiple"
                                 className="max-w-xs"
                                 >
