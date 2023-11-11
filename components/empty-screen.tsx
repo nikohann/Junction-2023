@@ -1,7 +1,7 @@
 import { UseChatHelpers } from 'ai/react'
 
 import { IconArrowRight } from '@/components/ui/icons'
-import { Button } from '@nextui-org/react'
+import { Button, Card, CardBody } from '@nextui-org/react'
 
 const exampleMessages = [
   {
@@ -17,8 +17,8 @@ const exampleMessages = [
 
 export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
   return (
-    <div className="mx-auto max-w-2xl">
-      <div className="rounded-lg border p-8">
+    <Card className="mx-auto max-w-2xl">
+      <CardBody className='p-8'>
         <h1 className="mb-2 text-lg font-semibold">
           IntelliMetal
         </h1>
@@ -41,7 +41,7 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
             </Button>
           ))}
         </div>
-      </div>
-    </div>
+      </CardBody>
+    </Card>
   )
 }
