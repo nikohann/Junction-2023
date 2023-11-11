@@ -53,7 +53,7 @@ export default function Settings() {
                                 selectionMode="multiple"
                                 className="max-w-xs"
                                 >
-                                {['GPT-3', 'GPT-3,5', 'GPT-4'].map((item, i) => (
+                                {['GPT-3', 'GPT-3.5', 'GPT-4'].map((item, i) => (
                                     <SelectItem key={i} value={item}>
                                     {item}
                                     </SelectItem>
