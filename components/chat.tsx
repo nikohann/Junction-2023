@@ -34,7 +34,7 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
 
   const settings = useContext(SettingsContext);
 
-  const { data, messages, append, reload, stop, isLoading, input, setInput } =
+  const { messages, append, reload, stop, isLoading, input, setInput } =
     useChat({
       initialMessages,
       id,
@@ -47,10 +47,6 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
         }
       }
     })
-
-    useEffect(() => {
-        console.log(data);
-    }, [data]);
 
   return (
     <>

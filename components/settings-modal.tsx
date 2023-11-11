@@ -6,35 +6,40 @@ import { ThemeSwitcher } from "./theme-switcher";
 import React, { useContext } from "react";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { SettingsContext } from "./chat";
+import {Key} from '@react-types/shared';
 
-export default function SettingsModal(){
+export default function SettingsModal() {
 
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     const settings = useContext(SettingsContext);
-    
+
     const [temperature, setTemperature] = React.useState<SliderValue>(settings.temp);
     const [maxTokens, setMaxTokens] = React.useState<SliderValue>(settings.maxTokens);
-    const [gptModel, setGptModel] = React.useState<string>("gpt-3.5-turbo");
-
-    //print states:
-    React.useEffect(() => {
-        console.log(temperature, maxTokens, gptModel)
-    }, [temperature, maxTokens, gptModel])
-
-    const handleSelectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setGptModel(e.target.value);
-    };
+    const [gptModel, setGptModel] = React.useState<Iterable<Key>>(["gpt-3.5-turbo"]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        settings.gptModel = gptModel;
+        settings.gptModel = gptModel as string;
         settings.maxTokens = maxTokens as number;
         settings.temp = temperature as number;
-
-        console.log("new settings: " + JSON.stringify(settings));
     }
+
+    const models = [
+        {
+            label: 'GPT-3.5-turbo',
+            value: 'gpt-3.5-turbo'
+        },
+        {
+            label: 'GPT-3.5',
+            value: 'gpt-3.5'
+        },
+        {
+            label: 'GPT-4',
+            value: 'gpt-4'
+        }
+    ];
 
     return (
         <>
@@ -77,12 +82,12 @@ export default function SettingsModal(){
                                     label="Select GPT Model"
                                     placeholder="GPT Model"
                                     className="max-w-xs"
-                                    onChange={handleSelectionChange}
-                                    value={gptModel}
+                                    defaultSelectedKeys={gptModel}
+                                    onSelectionChange={setGptModel}
                                 >
-                                    {['GPT-3.5-turbo', 'GPT-3.5', 'GPT-4'].map((item, i) => (
-                                        <SelectItem key={i} value={item}>
-                                            {item}
+                                    {models.map((model, i) => (
+                                        <SelectItem key={model.value} value={model.value}>
+                                            {model.label}
                                         </SelectItem>
                                     ))}
                                 </Select>
