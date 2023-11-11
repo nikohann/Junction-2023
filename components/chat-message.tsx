@@ -36,7 +36,7 @@ export function ChatMessage({message, messageExtra, ...props}: ChatMessageProps)
 
                         // If some of the articles have fetch: false and don't have any error, we are still waiting for them
                         const waitingForArticles = articles.filter((article: any) => !article.fetched && !article.error);
-                        if(waitingForArticles.length > 0) {
+                        if (waitingForArticles.length > 0) {
                             // Print message "Fetching data from domain1, domain2 and domain3..."
                             const domains = waitingForArticles.map((article: any) => extractDomain(article.url));
                             // @ts-ignore
@@ -50,15 +50,17 @@ export function ChatMessage({message, messageExtra, ...props}: ChatMessageProps)
 
                         // If some of the articles have done: false and don't have any error, we are still waiting for them
                         const processingArticles = articles.filter((article: any) => !article.done && !article.error);
-                        if(processingArticles.length > 0) {
+                        if (processingArticles.length > 0) {
                             // Print list of articles that are being processed
                             return <ul>
                                 {articles.filter((article: any) => !article.error).map((article: any, index: number) => {
                                     return <li key={article.url}>
-                                        {index + 1}
-                                        {". "}
+                                        <b>
+                                            {index + 1}
+                                            {". "}
+                                        </b>
                                         {
-                                            article.done?
+                                            article.done ?
                                                 <>Read: {article.title}</>
                                                 :
                                                 <>Processing data from {extractDomain(article.url)}...</>
@@ -92,10 +94,11 @@ export function ChatMessage({message, messageExtra, ...props}: ChatMessageProps)
                         const done = articles.length > 0
                             && articles.every((article: any) => article.done || article.error);
 
-                        if(done) {
+                        if (done) {
                             return <p>
                                 Sources: {articlesDone.map((article: any, index: number) => {
-                                    return <a
+                                return <>
+                                    <a
                                         key={article.url}
                                         href={article.url}
                                         target="_blank"
@@ -103,13 +106,15 @@ export function ChatMessage({message, messageExtra, ...props}: ChatMessageProps)
                                         className="underline"
                                     >
                                         {article.title}
-                                        {index < articlesDone.length - 1 ? "; " : ""}
                                     </a>
-                                })}
+                                    {index < articlesDone.length - 1 ? "; " : ""}
+
+                                </>
+                            })}
                             </p>
                         }
 
-                       return null;
+                        return null;
                     })()
                 }
             </div>
@@ -129,13 +134,13 @@ const extractDomain = (url: string) => {
 
 // Utility to format a list with the last element separated by "and"
 const formatList = (list: string[]) => {
-    if(list.length === 0) {
+    if (list.length === 0) {
         return "";
     }
-    if(list.length === 1) {
+    if (list.length === 1) {
         return list[0];
     }
-    if(list.length === 2) {
+    if (list.length === 2) {
         return list.join(" and ");
     }
     return list.slice(0, list.length - 1).join(", ") + " and " + list[list.length - 1];
