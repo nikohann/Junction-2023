@@ -6,22 +6,12 @@ import { ThemeSwitcher } from "./theme-switcher";
 import React from "react";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 
-export interface Settings {
-    temp: number,
-    max_tokens: number,
-    gpt_model: string,
-}
+export default function SettingsModal(){
 
-const SettingsModal: React.FC<Settings> = ({ temp, max_tokens, gpt_model }) => {
-
-    console.log("===============")
-    console.log(temp, max_tokens, gpt_model)
-
-    console.log("===============")
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-    const [temperature, setTemperature] = React.useState<SliderValue>(temp);
-    const [maxTokens, setMaxTokens] = React.useState<SliderValue>(max_tokens);
+    const [temperature, setTemperature] = React.useState<SliderValue>(0.5);
+    const [maxTokens, setMaxTokens] = React.useState<SliderValue>(1050);
     const [gptModel, setGptModel] = React.useState<string>("gpt-3.5-turbo");
 
 
@@ -108,4 +98,3 @@ const SettingsModal: React.FC<Settings> = ({ temp, max_tokens, gpt_model }) => {
         </>
     )
 }
-export default SettingsModal;
