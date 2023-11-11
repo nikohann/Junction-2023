@@ -19,7 +19,7 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
   return (
     <div className="mx-auto max-w-2xl">
       <div className="rounded-lg border p-8">
-        <h1 className="mb-2 text-lg font-semibold">
+        <h1 className="mb-2 text-3xl font-bold text-primary">
           IntelliMetal
         </h1>
         <p className="mb-2 leading-normal">
