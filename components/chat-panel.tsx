@@ -38,6 +38,8 @@ export function ChatPanel({
               variant="flat"
               onClick={() => stop()}
               startContent={<IconStop />}
+              color="primary"
+              className='animate-pulse'
             >
               Stop generating
             </Button>
@@ -46,6 +48,7 @@ export function ChatPanel({
               <Button
                 variant="flat"
                 onClick={() => reload()}
+                color='primary'
               >
                 <IconRefresh className="mr-2" />
                 Regenerate response
