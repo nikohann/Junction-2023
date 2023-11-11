@@ -71,7 +71,7 @@ export default function SettingsModal(){
                                     placeholder="GPT Model"
                                     className="max-w-xs"
                                     onChange={handleSelectionChange}
-                                    selectedKeys={gptModel}
+                                    value={gptModel}
                                 >
                                     {['GPT-3.5-turbo', 'GPT-3.5', 'GPT-4'].map((item, i) => (
                                         <SelectItem key={i} value={item}>
