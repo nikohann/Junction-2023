@@ -49,7 +49,7 @@ export async function POST(req: Request) {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + process.env.IM_API_KEY,
-                "X-FORWARDED-HOST": "junction.hannolainen.fi"
+                "X-Forwarded-Host": "junction.hannolainen.fi"
             },
             body: JSON.stringify({ question: messages[messages.length - 1].content, stream: true })
         });
