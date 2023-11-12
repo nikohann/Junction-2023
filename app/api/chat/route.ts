@@ -48,7 +48,7 @@ export async function POST(req: Request) {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer SecretKey12345"
+                "Authorization": "Bearer " + process.env.IM_API_KEY
             },
             body: JSON.stringify({ question: messages[messages.length - 1].content, stream: true })
         });
