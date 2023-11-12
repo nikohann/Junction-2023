@@ -41,7 +41,7 @@ export default function SettingsModal() {
 
     const models = [
         {
-            label: 'GPT-4.5-turbo',
+            label: 'GPT-4-turbo',
             value: 'gpt-4.5-turbo'
         },
         {
