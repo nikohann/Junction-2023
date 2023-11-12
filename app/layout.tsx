@@ -22,9 +22,9 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head />
-      <body className="min-h-screen text-foreground bg-background font-sans antialiased bg-gradient-to-br from-primary-200 via-secondary-200 to-slate-400 background-animate">
+      <body className="min-h-screen text-foreground bg-background font-sans antialiased bg-gradient-to-br from-primary-200 via-secondary-200 dark:via-secondary-400 to-slate-400 background-animate">
         <Providers>
           <main className="flex flex-col flex-1 bg-muted/50">{children}</main>
         </Providers>
