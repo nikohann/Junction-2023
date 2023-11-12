@@ -22,9 +22,9 @@ export interface Settings {
 }
 
 const defaultSettings: Settings = {
-    temp: 0.5,
-    maxTokens: 50,
-    gptModel: "gpt-3.5-turbo"
+    temp: 0.3,
+    maxTokens: 1024,
+    gptModel: "gpt-4.5-turbo"
 }
 
 export const SettingsContext = createContext(defaultSettings);

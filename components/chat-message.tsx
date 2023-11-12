@@ -1,22 +1,35 @@
+'use client'
 // Inspired by Chatbot-UI and modified to fit the needs of this project
 // @see https://github.com/mckaywrigley/chatbot-ui/blob/main/components/Chat/ChatMessage.tsx
 
-import {Message} from 'ai'
+import { Message } from 'ai'
 import remarkGfm from 'remark-gfm'
 
-import {cn} from '@/lib/utils'
-import {MemoizedReactMarkdown} from '@/components/markdown'
-import {IconOpenAI, IconUser} from '@/components/ui/icons'
+import { cn } from '@/lib/utils'
+import { MemoizedReactMarkdown } from '@/components/markdown'
+import { IconOpenAI, IconUser } from '@/components/ui/icons'
+import { Button, Link, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalProps, useDisclosure } from '@nextui-org/react'
+import { useState } from 'react'
+import React from 'react'
 
 export interface ChatMessageProps {
     message: Message,
     messageExtra: any
 }
 
-export function ChatMessage({message, messageExtra, ...props}: ChatMessageProps) {
+export function ChatMessage({ message, messageExtra, ...props }: ChatMessageProps) {
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const [modal, setModal] = useState({ title: "news title", summary: "empty summary", href: "#", source: "http://" });
+    const [scrollBehavior, setScrollBehavior] = React.useState<ModalProps["scrollBehavior"]>("inside");
+
+    function openModal(title: string, summary: string, href: string, source: string) {
+        setModal({ title, summary, href, source });
+        onOpen();
+    }
+
     return (
         <div
-            className={cn('group relative mb-4 flex items-start md:-ml-12')}
+            className='group relative mb-4 flex items-start md:-ml-12'
             {...props}
         >
             <div
@@ -27,7 +40,7 @@ export function ChatMessage({message, messageExtra, ...props}: ChatMessageProps)
                         : 'bg-primary text-primary-foreground'
                 )}
             >
-                {message.role === 'user' ? <IconUser/> : <IconOpenAI/>}
+                {message.role === 'user' ? <IconUser /> : <IconOpenAI />}
             </div>
             <div className="flex-1 px-1 ml-4 space-y-2 overflow-hidden">
                 {
@@ -77,7 +90,7 @@ export function ChatMessage({message, messageExtra, ...props}: ChatMessageProps)
                     className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
                     remarkPlugins={[remarkGfm]}
                     components={{
-                        p({children}) {
+                        p({ children }) {
                             return <p className="mb-2 last:mb-0">{children}</p>
                         },
                     }}
@@ -95,30 +108,55 @@ export function ChatMessage({message, messageExtra, ...props}: ChatMessageProps)
                             && articles.every((article: any) => article.done || article.error);
 
                         if (done) {
-                            return <p>
-                                Sources: {articlesDone.map((article: any, index: number) => {
-                                return <>
-                                    <a
-                                        key={article.url}
-                                        href={article.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="underline"
-                                    >
-                                        {article.title}
-                                    </a>
-                                    {index < articlesDone.length - 1 ? "; " : ""}
+                            return (<>
+                                <p>Sources:</p>
+                                <ul className='flex flex-col space-y-2'>
+                                    {articlesDone.map((article: any, index: number) => {
+                                        return (
+                                            <li key={article.url}>
+                                                <Link
+                                                    isBlock
+                                                    color="foreground"
+                                                    onClick={x => openModal(article.title, article.summary, article.url, extractDomain(article.url))}
+                                                    className="underline leading-5 cursor-pointer -mx-2">
+                                                    {article.title}
+                                                </Link>
+                                            </li>
+                                        )
+                                    })
+                                    }
+                                </ul>
+                                <Modal isOpen={isOpen} onOpenChange={onOpenChange} scrollBehavior={scrollBehavior}>
+                                    <ModalContent>
+                                        {(onClose) => (
+                                            <>
+                                                <ModalHeader className="flex flex-col gap-1">{modal.title}</ModalHeader>
+                                                <ModalBody>
+                                                    {modal.summary}
+                                                    <p className='italic'>{modal.source}</p>
+                                                </ModalBody>
+                                                <ModalFooter>
+                                                    <Button color="danger" variant='flat' onPress={onClose}>
+                                                        Close
+                                                    </Button>
 
-                                </>
-                            })}
-                            </p>
+                                                    <Button color="primary" onPress={onClose} as={Link} isExternal href={modal.href}>
+                                                        Open full
+                                                    </Button>
+                                                </ModalFooter>
+                                            </>
+                                        )}
+                                    </ModalContent>
+                                </Modal>
+                            </>
+                            );
                         }
 
                         return null;
                     })()
                 }
             </div>
-        </div>
+        </div >
     )
 }
 

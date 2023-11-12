@@ -35,18 +35,15 @@ export function ChatPanel({
         <div className="flex h-10 items-center justify-center mb-10">
           {isLoading ? (
             <Button
-              variant="flat"
               onClick={() => stop()}
-              startContent={<IconStop />}
               color="primary"
-              className='animate-pulse'
+              isLoading
             >
               Stop generating
             </Button>
           ) : (
             messages?.length > 0 && (
               <Button
-                variant="flat"
                 onClick={() => reload()}
                 color='primary'
               >

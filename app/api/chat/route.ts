@@ -38,9 +38,9 @@ export async function POST(req: Request) {
             throw new UserError('Missing request data')
         }
 
-        const {messages} = json;
+        const {messages, settings} = json;
 
-        if (!messages || !messages[messages.length - 1]?.content) {
+        if (!messages || !messages[messages.length - 1]?.content || !settings || !settings.maxTokens || !settings.temp) {
             throw new UserError('Missing query in request data')
         }
 
@@ -66,7 +66,7 @@ export async function POST(req: Request) {
 
         const handleJson = async (json: any) => {
             const type = json?.type?.toString() ?? "";
-            console.log(JSON.stringify(json));
+            //console.log(JSON.stringify(json));
             if(type === "DONE") {
                 const chatMessage: ChatCompletionRequestMessage = {
                     role: 'user',
@@ -76,8 +76,7 @@ export async function POST(req: Request) {
                 const response = await openai.createChatCompletion({
                     model: 'gpt-4-1106-preview',
                     messages: [chatMessage],
-                    max_tokens: 256,
-                    temperature: 0,
+                    temperature: settings.temp,
                     stream: true,
                 })
 
