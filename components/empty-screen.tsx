@@ -34,8 +34,12 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
               key={index}
               variant="light"
               className="h-auto -ml-1 p-1 text-base"
-              onClick={() => setInput(message.heading)}
-            >
+              onClick={() => {
+                  setInput(message.heading);
+                  window.setTimeout(() => {
+                      document.getElementById("submit-button")?.click();
+                  }, 250);
+              }}>
               <IconArrowRight className="mr-2" />
               {message.heading}
             </Button>
