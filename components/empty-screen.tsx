@@ -5,14 +5,14 @@ import { Button, Card, CardBody } from '@nextui-org/react'
 
 const exampleMessages = [
   {
-    heading: 'What is the expected development of stainless steel market pricing?',
+    heading: 'How are current geopolitical events impacting the stainless steel industry?',
   },
   {
     heading: 'What recent news state about possible energy price developments?',
   },
   {
-    heading: 'What are the most recent patents granted in the area of stainless steel?',
-  }
+    heading: 'How is the global market reacting to new energy policies?',
+  }  
 ]
 
 export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
@@ -35,10 +35,10 @@ export function EmptyScreen({ setInput }: Pick<UseChatHelpers, 'setInput'>) {
               variant="light"
               className="h-auto -ml-1 p-1 text-base"
               onClick={() => {
-                  setInput(message.heading);
-                  window.setTimeout(() => {
-                      document.getElementById("submit-button")?.click();
-                  }, 250);
+                setInput(message.heading);
+                window.setTimeout(() => {
+                  document.getElementById("submit-button")?.click();
+                }, 250);
               }}>
               <IconArrowRight className="mr-2" />
               {message.heading}
